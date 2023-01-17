@@ -35,8 +35,7 @@ def matrix_add(a, b):
     for ra, rb in zip(a, b):
         if len(ra) != len(rb):
             raise ValueError('matrices with different dimensions cannot be added')
-        row = [a+b for a,b in zip(ra, rb)]
-        ret.append(row)
+        ret.append([i+j for i,j in zip(ra, rb)])
     return ret
 
 def column(mat, n):
