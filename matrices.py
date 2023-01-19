@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 def matrix_zeros(a, b):
-    return [[0]*b]*a
+    return [[0]*b for i in range(a)]
 
 def copy_matrix(mat):
     ret = []
