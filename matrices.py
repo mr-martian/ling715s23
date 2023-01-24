@@ -4,13 +4,7 @@ def matrix_zeros(a, b):
     return [[0]*b for i in range(a)]
 
 def copy_matrix(mat):
-    ret = []
-    for row in mat:
-        cur = []
-        for col in row:
-            cur.append(col)
-        ret.append(cur)
-    return ret
+    return [row[:] for row in mat]
 
 def print_matrix(mat):
     print('[', end='')
