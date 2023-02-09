@@ -10,14 +10,10 @@ class Model:
         self.B = B
     def sigma(self, vec):
         return np.reciprocal(np.exp(-vec)+1)
-    def d_sigma(self, vec):
-        return np.multiply(np.exp(-vec), np.power(self.sigma(vec), 2))
     def loss(self, y_hat, Y):
         return -np.sum(np.multiply(np.log(y_hat), Y)) / len(Y)
     def predict(self, X):
         return self.sigma(np.matmul(X, np.transpose(self.W)) + self.B)
-    def get_loss(self, X, Y):
-        return self.loss(self.predict(X), Y)
     def update(self, X, Y, alpha):
         y_hat = self.predict(X)
         cur_loss = self.loss(y_hat, Y)
@@ -54,14 +50,12 @@ class Trainer:
         else:
             self.costs.append(self.model.update(self.X, self.Y, self.alpha))
     def plot(self, ax):
-        print(self.costs)
         ax.plot(list(range(len(self.costs))), self.costs, label=self.label)
 
 def do_epochs(trainers, EPOCHS):
     for i in range(1, EPOCHS+1):
         print(f'EPOCH {i}')
         for trainer in trainers:
-            print(trainer.accuracy())
             trainer.epoch()
     fig = pyplot.figure()
     ax = fig.add_subplot()
@@ -87,9 +81,10 @@ B = np.random.rand(CLASSES)
 trainers = [
     Trainer(Model(W[:,:], B[:]), X, Y, 0.1, "α = 0.1"),
     Trainer(Model(W[:,:], B[:]), X, Y, 0.01, "α = 0.01"),
+    Trainer(Model(W[:,:], B[:]), X, Y, 0.001, "α = 0.001"),
 ]
 
-do_epochs(trainers, 100)
+do_epochs(trainers, 5)
 
 # sanity check against page 17 of the textbook
 #x = np.array([[3, 2]])
